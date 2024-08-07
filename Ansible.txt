@@ -1,0 +1,62 @@
+ansible all -i /etc/ansible/hosts -m command -a 'free'
+
+here (all) means all managed nodes
+-i means inventrory file consists of all ipaddress of managed nodes.
+-m means module
+-a means arguments.
+
+ 
+			Ansible
+ 
+configuration management(process of configuring remote servers from one point of control) tool
+
+  cm tools cannot be used for installing os from scratch(thet can be used for managing the applications on the top of os)
+
+  cm tools-andible,puppet,chef,salt etc.
+ 
+ansible --open source cm tool created using python
+
+the main machine it is installed is called the controller
+
+the servers that ansible configures--managed nodes
+ 
+create 1 controller and 3 manage nodes
+ 
+ssh -keygen command used to generate keys in the controller
+ 
+copy the private ip address of servers
+
+on controller ansible is installed
+ 
+cd etc/ansible ---> ls ----> hosts
+
+hosts file should contain the ip address of the mange nodes/servers
+
+to open host file sudo vim hosts 
+
+insert the ip address of the servers
+ 
+ 
+2 ways ansible can perform configurations
+
+  adhoc commands
+
+  playbooks
+
+*with commands we are having the modules.
+
+file module :used to create files and folders on managed node
+
+---
+- hosts: all
+  tasks:
+    - name: Install the Apache web server
+      apt:
+        name: apache2
+        state: present
+
+
+
+
+
+

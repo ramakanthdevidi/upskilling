@@ -1,0 +1,121 @@
+pipeline {
+    agent any
+
+    environment {
+        SONIC_REPO = 'https://github.com/sonic-net/sonic-buildimage.git'
+        SONIC_BRANCH = 'master' // Change to the desired branch if needed
+        ASIC_VENDOR = 'broadcom'
+        BUILD_JOBS = 16
+    }
+
+    stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Ensure Docker is installed and running
+                    def dockerVersion = sh(script: 'docker --version', returnStatus: true)
+                    if (dockerVersion != 0) {
+                        sh '''
+                            curl -fsSL https://get.docker.com -o get-docker.sh
+                            sudo sh get-docker.sh
+                            rm get-docker.sh
+                            sudo usermod -aG docker jenkins
+                        '''
+                    }
+
+                    // Ensure the 'overlay' module is loaded
+                    sh '''
+                        sudo modprobe overlay || (sudo apt-get install -y linux-modules-extra-$(uname -r) && sudo modprobe overlay)
+                    '''
+                }
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+                sh '''
+                    rm -rf sonic-buildimage
+                    git clone --recurse-submodules ${SONIC_REPO} -b ${SONIC_BRANCH}
+                '''
+            }
+        }
+
+        stage('Install Prerequisites') {
+            steps {
+                sh '''
+                    sudo apt-get update
+                    sudo apt-get install -y python3-pip python3-venv
+                '''
+            }
+        }
+
+        stage('Setup Virtual Environment') {
+            steps {
+                script {
+                    sh '''
+                        python3 -m venv venv
+                        . venv/bin/activate
+                        pip install j2cli
+                    '''
+                }
+            }
+        }
+
+        stage('Docker Setup') {
+            steps {
+                script {
+                    // Ensure user is added to the Docker group
+                    sh '''
+                        sudo usermod -aG docker jenkins
+                    '''
+                }
+            }
+        }
+
+        stage('Initialize Build Environment') {
+            steps {
+                script {
+                    // Initialize the build environment
+                    sh '''
+                        cd /var/lib/jenkins/workspace/Sonic-buildimage/sonic-buildimage
+                        make init
+                    '''
+                }
+            }
+        }
+
+        stage('Configure Build') {
+            steps {
+                script {
+                    // Configure the build for the specified ASIC vendor
+                    sh '''
+                        cd /var/lib/jenkins/workspace/Sonic-buildimage/sonic-buildimage
+                        make configure PLATFORM=${ASIC_VENDOR}
+                    '''
+                }
+            }
+        }
+
+        stage('Build SONiC Image') {
+            steps {
+                script {
+                    // Build the SONiC image with the specified number of jobs
+                    sh '''
+                        cd /var/lib/jenkins/workspace/Sonic-buildimage/sonic-buildimage
+                        make SONIC_BUILD_JOBS=${BUILD_JOBS} all
+                    '''
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive the build artifacts
+            archiveArtifacts artifacts: 'sonic-buildimage/target/*.bin', allowEmptyArchive: true
+
+            // Clean up workspace
+            //cleanWs()
+        }
+    }
+}

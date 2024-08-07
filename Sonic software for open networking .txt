@@ -1,0 +1,5 @@
+Sonic: software for open networking in the cloud
+
+is is a debian linux based network operating system
+
+Sonic OS makes data center switches more raliable

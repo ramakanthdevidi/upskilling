@@ -1,0 +1,11 @@
+(in managed node to do)
+sudo passwd ubuntu
+sudo vim /etc/ssh/sshd_config
+sudo service ssh restart
+
+in comntroller 
+
+ssh-keygen
+ssh-copy-id ubuntu@ipadesspaste
+chmod a+rwx /etc/ansible/hosts
+

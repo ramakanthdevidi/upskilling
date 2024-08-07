@@ -1,0 +1,162 @@
+Kubernetes:
+
+kn8s orchestrator:node status,pod status,health,logging,replicas,it manges this and we call it  as control plane
+|
+|
+NODEs:dataplane,workernode, in nodes we have dockerhosts
+
+yaml:
+--- are not mandatory
+we can use it if we have more configurations
+
+
+
+kubernetes is very much decoupled.
+
+Monolithic & Microservices:
+
+in k8s we use microservices
+
+
+
+
+
+
+
+Docker vs Kubernetes:
+
+Docker:
+
+Conatiners are ephemeral(short living orr die & revive any time ) in nature 
+single host nature
+and not having auto healing
+and also not having auto scaling
+does not support any Enterprise applications.
+so this all can be solve by k8s.
+
+
+* Kubernetes, also known as 'K8s'
+* it is open source product developed by google
+* it is a container orchestration platform.
+pod is the collection of multipul container
+
+docker Swarm alternative is kubernetes, here in swarm used to shedule the container s in docker host
+
+Microservices?
+
+Microservices are a software architecture pattern that structure applications as collection of small, independently deployable services
+
+Each microservices is designed to perform a specific function or business capability and communicates with other services over well-defined APIs or protocols.
+
+Architecture of Kubernetes:
+
+in kubernets will have  pod means top layer of container.
+cluster in in k8s is collections of containers
+here in cluster we have two types of nodes master nodes and worker nodes
+
+Master nodes: components:
+              Api Server
+              Controller Manager
+              Scheduler
+              etcd
+brain of the cluster is master node
+
+we also call this as control plane
+
+
+Api Server:The Api server is a component  of the Kubernetes control plane that exposes the kubernetes API. The ApI server is the front end for the k8s control plane.
+
+
+
+worker node components:
+
+Kubelet: details of node is pushed to api server of masternode.
+Kube-proxy:best path for communication btw the container it is used.
+Container platform:docker container etc----
+
+
+
+
+To create a pod we create a yml file there we write code 
+ to execute it we use : kubectl apply -f filename.yml
+ To see all pods we use : kubectl get pods
+to get pods with ip name as well use : kubectl get pods -o wide
+ To see all details of pod we use : kubectl describe pod podname
+To change the  number of replicas we can do it :kubectl edit deployment filename
+to remove all pods and delpoyments use: kubectl delete -f .
+To see servicses we use :kubectl get svc 
+
+
+Services:In K8s , a service is an abstraction that provides a consistent way to access and communicate with a set of Pods.
+
+Types of services :
+
+1.ClusterIp:it is accesible only within the cluster means internal communication between the pods or nods etc
+2.NodePort:expose outside not used in production The service is accessible using the cluster nodes'Ip address
+3.Loadbalancer:distribute traffic to Service,External clients can access the service Using a publicly accessible Ip address
+4.ExternalName:
+
+
+Workload Componets : pods, deployment, replicaset, services. ,configmaps , secrets
+
+Secrets:In kn8s a secret is an api object used to store sensitive information, such as passwords, tokens or ssh keys.
+
+types of secrets:
+1.Opaque:
+2.Docker-registry
+3.TLS
+4.Service Account:
+
+kubernetes.io/basic-auth: For HTTP basic authentication.
+kubernetes.io/ssh-auth: For SSH private keys.
+kubernetes.io/tls: For TLS/SSL certificates and private keys.
+Opaque: For arbitrary secret data.
+kubernetes.io/dockerconfigjson: For Docker registry credentials.
+kubernetes.io/service-account-token: Managed by Kubernetes for service accounts.
+Each type provides a different way of handling and encoding secret data, catering to various use 
+
+Persistent Volumes:
+
+In Kubernetes, a Persistent Volume(PV) is a piece of storage provisioned in a cluster that can be dynamically allocated and managed by administrators.
+
+to attach the volume that we created manuvally we need the pvc
+
+
+Persistent Volume Claims(PVCs):
+
+pvcs in kubernetes have three different reclaim policies that determine what happens to associated Persistent Volume(PV) when the pvc is deleted or no longer needed
+1.Retain: The PV associated with the PVC is not automatically deleted or released when the pvc is deleted. Instead, the PV is retained, and its contents are preserved.
+2.DELETE:Pv should automatically deleted when the PVC is deleted.
+3.REcycle(Deprecated): The "Recycle" policy is deprecated and no longer recommended for use:
+
+
+In Kubernetes, Persistent Volumes (PVs) and Persistent Volume Claims (PVCs) are used to manage storage resources. Access modes define how the storage can be accessed by Pods. They are crucial for determining how many Pods can access the volume simultaneously and in what manner. Here’s a detailed explanation of the different access modes:
+
+### Access Modes in Kubernetes
+
+#### 1. **ReadWriteOnce (RWO)**
+- **Description**: The volume can be mounted as read-write by a single node.
+- **Use Case**: Suitable for applications that need read-write access to a volume but only from one node at a time.
+- **Example**: A single-instance database like MySQL, where only one instance needs write access.
+ 
+ 
+#### 2. **ReadOnlyMany (ROX)**
+- **Description**: The volume can be mounted as read-only by many nodes.
+- **Use Case**: Useful for scenarios where multiple nodes need to read from the same volume but do not need write access.
+- **Example**: Shared configuration files or static content servers where nodes only need to read the data.
+ 
+ 
+#### 3. **ReadWriteMany (RWX)**
+- **Description**: The volume can be mounted as read-write by many nodes simultaneously.
+- **Use Case**: Ideal for applications that require concurrent read-write access from multiple nodes.
+- **Example**: A shared file system used by multiple instances of an application, like a distributed filesystem or certain types of content management systems
+
+### Access Modes Summary
+
+| Access Mode      | Description                                      | Number of Nodes | Read/Write |
+|------------------|--------------------------------------------------|-----------------|------------|
+| **ReadWriteOnce (RWO)** | Mounted as read-write by a single node only. | 1               | Read/Write  |
+| **ReadOnlyMany (ROX)** | Mounted as read-only by many nodes.            | Many            | Read       |
+| **ReadWriteMany (RWX)** | Mounted as read-write by many nodes.           | Many            | Read/Write  |
+
+ 

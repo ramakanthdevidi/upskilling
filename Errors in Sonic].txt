@@ -1,0 +1,9 @@
+error:
+
+some commands for install docker.io
+
+sudo chmod 666 /var/run/docker.sock
+
+
+sudo visudo
+jenkins ALL=(ALL) NOPASSWD: ALL

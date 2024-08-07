@@ -1,0 +1,119 @@
+Regions and zones:
+
+high latency: means slow access
+azure provide 60+ regions around world
+
+Region :  Specific geographical location to host your resources.
+
+
+*)In one regions we can have multiple region
+
+*) Each zone have one more datacenters
+
+*) all availability zones in a region are connnected through low-latency links
+
+Note : Not all azure regions have Availability Zones
+
+East US : 3 availability zones
+
+West Central US: 0 
+
+
+Azure Virtual Machine:
+
+public inbound ports:
+
+1)http(80)
+2)https(443)
+3)ssh(22)
+
+Availability: are the appliacations available when the user need them?
+99.95% availability means 22 min downttime in a month
+
+99.99(four 9's) availability means 4 and halfmin downtime in a month
+
+99.999%(five 9's) availability means 26 sec downtime in a month
+
+for vm's availability based on disk attached 
+
+we are having 
+Single instance vm:
+  * Premium SSD or ultra Disk: 99.9%
+  * standard SSD mangaed Disks: 99.5%
+  * Standard HDD Managed Disks: 95%
+
+Availability set: logical grouping of VMs
+if  two or more  instances in same availability set : 99.95% here we can see avaialbility incresed.
+
+Virtual Machine Scale Sets:
+
+
+
+
+
+Server:
+The computer system that accepts requests for online files and transmits those files to the client is referred to as a “server” in the context of the Internet.
+
+a simple software program
+* A server is a computer porogram or device that provides a service to another computer program and its user, also known as client.
+
+
+managed compute services:
+
+IAAS:   use only infrastructure from cloud provider
+
+ex:Using VM to deploy your applications or databases
+
+you are responsible for :
+
+1. Aplication code and runtime
+2. Configuring load balancing
+3.Auto scaling
+4.os upgrade and patches
+5.Availability
+ex:vm
+ex:on linux os we install java run time and on java run time we deploy applications
+this all on on virtual machines
+
+PAAS:  platform as a service
+
+use a platform provided by the cloud
+
+Cloud Provider is responsible for:
+    
+    Os
+    application Runtime
+    Auto Scaling Availability & Load balancing\
+
+
+You are resposible for:
+Configuration 
+Application
+
+ex:Azure App service
+
+
+Microservices:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

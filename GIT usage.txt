@@ -1,0 +1,118 @@
+Git:
+git is  a version controlling system
+what is version controlling :tools that help a software team manage changes to source code over time.
+source code: when client give the requirement the development team will develop the source code
+ 
+git maintains the different versions of source code after changes and before changes.
+ 
+*two types of version controlling
+ 
+1)Centralized version controlling 
+2)distributed version controlling
+ 
+git is distributed version controlling
+we can manage the source code using git commands.
+
+Working directory: folder where the source code is saved, to create it we have to create a normal folder into a working directory
+how to convert to working directory: git init
+
+**first step is the developer is to do is that we have to convert the particular directory where source code is there to working directory.
+
+ 
+$ git config --global user.name "Ramakant"
+ 
+$ git config --global user.email  "ramakanm@hmail.com"
+
+we can verify or check the verifications :git config --global --list
+
+ 
+* as per git there are three types of files.
+ 
+1)Untracked files: the file that developer create by default ex: that we create in folder, developer need to move untracked file to staging area(git add filename)
+and from there to local repository, 
+to see list of untracked files we use command called (git status) 
+if we want to move all files to staging area then use (git add .)
+we can use git reset filename to go back to untracked place form the staging area.
+to move from staging area to Lr  we use (git commit -m "write any message here")
+2.staged files: 
+3.commited files: to see the no of committed files we use  (git log) or git log --oneline  how many files committed
+
+why do we this means as per git to maintain version controlling we have to do all this process.
+ 
+after developing code every developers do, move the untracked files to staging area and from there to local repository
+if we want to sent back file from staging area to untracked files use (git restore filename)
+we  should convert folder to working directory first to do all of this. Their we use (git in it)
+if developer have another functions then we have to create another branches for that we use (git branch branch name)
+(git checkout branch name): it goes to that branch name branch.
+ 
+git in it: initialized empty git repository in location.
+touch f1:create an empty file in location
+git add.: add all the created files to staging area.
+git commit -m "a": sent all files to local repository with message or commit a.
+git log --online: shows the list of commits in the master branch
+
+       Branching:
+
+
+
+ 
+ 
+*git rebase means: it is called fast forward merge 
+here commits in child branch will be latest commits after merging if we use rebase child.
+ 
+ 
+*difference between merge and rebase:
+ 
+ex:in master if we commit f1 and then after we commit f2 next we create a child branch called test where here we commit f3 and after f4 and after f5 
+then we checkout to master and there we commit f6 
+so here if we use rebase of child to master we get child commit as latest commit we get order like f3,f4,f5,f6,f1,f2
+other wise we get linear way if we merge.
+ 
+how to rearrange the commit history: git rebase -i HEAD~4
+if we want to remove the commit we use squash key word.
+.gitignore ignores the files which we want to ignore ex:for java we have .class and .java so we ignore .class here by using .gitignore
+stash means hiding.
+in ingore it works for what machine generated things like automated files whwere as stash works for developer devloped code
+ 
+   stash:
+ 
+ 
+1) To stash the stagged files: git stash
+2) To stash the stagged and untracked files: git stash -u
+3) To see the list of stashes: get stash list
+4)To get back all the stash files :git stash pop
+5)to being the older stash out: git stash pop stash@{stash number}
+
+ 
+ 
+                   
+
+* how to roll back from the previous version of source code
+ 
+we want commit id for that we use git log --online
+ 
+git reset --hard  84d73cc
+ 
+that last one is commit id 
+ 
+after installing gitbash if open afile there first we need to make working directory
+ 
+by using git init
+ 
+after we should give user name and password for git 
+ 
+$ git init
+ 
+$ git config --global user.name "ramakanth"
+ 
+$ git config --global user.email  "ramakanm@hmail.com"
+
+we can veryfiy or check the verifications :git config --global --list
+ 
+we use git status for checking files
+ 
+tto see hoe many committed files are there :we use git log
+ 
+how create a branch git branch branch name
+ 
+move to that branch is :git  checkout branch name

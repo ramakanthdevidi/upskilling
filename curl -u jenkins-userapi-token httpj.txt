@@ -1,0 +1,1 @@
+curl -u jenkins-user:api-token http://jenkins.example.com/computer/api/json | jq -r '.computer[] | "\(.displayName) is \(.offline | if . then "offline" else "online" end)"'

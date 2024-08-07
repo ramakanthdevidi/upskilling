@@ -1,0 +1,126 @@
+Why do we need Docker?:
+
+ the code written by software developer was abstracted and bulid as a package and this package as image repo
+ 
+What is Docker?:
+
+  Docker is a set of platform as a service products that use os-level virtuallization to deliver software in packages called containers.
+
+
+What is container in docker:  
+
+ Docker containers are lightweight packages of software that run on a common platform called Docker Engine.They isolate applications from the underlying system and allow them to run faster, more reliably, and more portably.
+
+what is Docker image: 
+
+  A docker image is a read-only template that contains a set of instructions for creating a container that can run on the docker platform
+
+
+To see docker images we use :  docker images
+
+To see list of coniatiners we use :  docker ps
+
+To pull any images we use: ex:  docker pull mysql
+
+
+*)Docker hub is is public image repo it is access to any all
+
+we have azure container registry if we want to use in privetly
+
+and also in aws we have elastic container registry.
+
+If we want o remove any docker images which are runnning  we use: docker rmi mysql
+for stoped containers we use docker rm containername
+
+
+If we want to create a container: we use docker create imageid
+
+here u give image id ex:we have 3f8a00f137a0
+
+
+To see which container created we use: docker ps -a
+
+
+TO start the contaniner we use : docker start containerid
+
+
+To login into container we use: docker exec -it 4345ds323r --/bin/bash
+
+
+
+Docker Operations:  
+
+
+
+imp commands in docker
+
+1) docker --version
+2)docker login
+3)docker search nginx
+4)docker docker inspect image nginx:to see furthor details we use it
+5)to see list of images:docker images or docker image ls
+
+6)docker ps : it shows container which are running
+
+or docker ps -a shows all the containers
+
+
+
+To create an run the container we use:
+   docker run -d --name conatinername imagename
+
+here -d is detached mode means without logining into contanier it it creates and run because some times if we login into container it does not comes back
+
+
+
+Docker Networking: we have 3 docker networking 
+
+1)Bridge(default network): run -d --name http01 -p 8080:80 httpd, with port number we can access it 
+
+
+2)Host:run -d --name http02 --net host httpd, here port number is not required it will acceess direclty
+
+3)None:docker run -d --name http03 --net none httpd , here it is for testing purpousee no one can access it
+
+if want to see the ip adddress of machine we can use : ifconfig 
+
+
+
+DOCKER VOLUMES:
+
+default locations for docker volumes are /var/lib/docker/volumes/
+
+
+how to create volumes: docker run -it --name=srv01 --mount source=testvoll,destination=/data centos
+
+or we can use this also: docker run -it --name srv04 -v testvol1:/data centos
+
+
+or for attaching exsting volumes to new container we use:
+   docker run -it --volumes-from srv01 --name srv02 centos /bin/bash
+
+
+
+Docker files:
+install apache on centos
+
+pull centos form dockerhub : From
+
+install java : Run
+
+create/opt/tomcat directory : Run
+
+change work directory to /opt/tomcat :wokrdir
+
+download tomcat packages: ADD/RUN
+
+Extract tar.gz file: RUN
+
+Rename To tomcat directory: RUN
+
+
+Multi Container app using docker 47
+
+
+
+

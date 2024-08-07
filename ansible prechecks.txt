@@ -1,0 +1,11 @@
+ansible prechecks
+sonic-build
+salt-stack
+apche-airflow
+Kubernetes
+terraform
+git actions
+Jenkins
+Linux
+
+

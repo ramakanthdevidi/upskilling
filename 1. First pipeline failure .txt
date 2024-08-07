@@ -1,0 +1,14 @@
+1. First pipeline failure :
+
+# Open the sudoers file
+sudo visudo
+
+# Add the following line
+jenkins ALL=(ALL) NOPASSWD: ALL
+
+
+2. sudo apt  install docker.io
+
+
+
+3.sudo apt  install j2cli

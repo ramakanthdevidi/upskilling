@@ -1,0 +1,34 @@
+pipeline {
+    agent any
+    environment {
+        DEBIAN_FRONTEND = 'noninteractive'
+    }
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                script {
+                   // Check if the git repository is already cloned
+                     sh '''
+                     rm -rf sonic-buildimage
+                     git clone --recurse-submodules https://github.com/sonic-net/sonic-buildimage.git
+                    '''
+                }
+            }
+        }
+        stage('Build Image') {
+            steps {
+                script {
+                    // Build the SONiC image
+                    sh '''
+                    cd sonic-buildimage
+                    sudo modprobe overlay
+                    make init
+                    make configure PLATFORM=broadcom
+                    make SONIC_BUILD_JOBS=4 all
+                    '''
+                }
+            }
+        }
+    }
+    }

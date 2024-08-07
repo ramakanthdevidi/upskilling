@@ -1,0 +1,205 @@
+PowerShell:An Automation engine that provides a task-based command-line interface,and much more object orineted scripting language.
+
+* it is developed by .net frameworks
+
+* easy to learn and tool for automation.
+
+* it is port of windows management framework.
+
+ise:integrated scripting environment
+
+cmdlets:
+
+verb-noun ex:get-help,get-process
+
+
+Scripting:
+
+in windows powershell ,script files have a  .ps1 file name extension. To run a script, type the name of script at the command prompt
+
+
+
+$firstName = $args[0]
+$lastName = $args[1]
+
+
+
+Write-host  "hello $firstName $lastName"
+Write-Host  "you are login form $env:COMPUTERNAME"
+Write-Host  "we will meet someday"
+
+
+* to execute this script ./withfilename Ramakanth devidi
+
+
+Execution Policy:
+
+* get-executionPolicy cmdlet simply tells you which of the four execution policies  that determines which windows powershell scripts,
+
+1)Restricted-No Scripts can be run windows powershell can be only used in interactive mode.
+
+2)UnRestricted-No restrictions;all windows powershell scripts can be run
+
+3)Allsigned-Only scripts signed by trusted publisher can be run
+
+4)RemoteSigned-download scripts must be signed by trusted publisher before they run.
+
+
+         FORMAT OUTPUT:
+
+ex if we want any data to insert in csv files or some files we can use (format-table -wrap) command for that to store data in table format
+ if want list then go for format-list
+
+format-list|format-table
+
+
+
+Powershell basics:
+
+
+*Everything is object:
+
+everything in powershell is an object beacause it runs on top of .net framework we know that .net is a oop programmign language.
+
+
+pipelines |
+
+ex:
+get-services|select name
+
+
+        Alias
+
+shortcut for a command ex:azconnad-resourecs like command we have everytime using it is  not easy so windows having some alias or we can create it by using (new-Alias -name "Azrd" -value "azcoonad-resouces")
+
+this is how we can create our own alias
+
+
+* Get-service -Name "*A"
+for this we get letter ending with a 
+
+ 
+
+datatype 
+
+getType()
+
+
+
+*to see the version of powershell:we use $PSVersion.psversion
+
+Arrays and hash table:
+
+*$myarray = @("rk","raj","sumit")
+$myarray[1]
+# indexed collection of objects,objects can have only one type.
+
+hashtable:key value pair datatype 
+$myht = @{"firstName" = "rk"}
+$myht["firstName"]
+
+*operators in powershell:
+
+
+l)Arithematic +,/,%,-
+....
+....
+...
+
+2)comparision operator:-eq,-ne,-it,-gt..
+
+3) WildCard and RegEx: -like -notlike,-match,-notmatch,-replace
+
+4)regular experession:-or,-and
+if(($var1 -eq 2) -or ($var2 -eq 4))
+{
+write-host "2 and 4"
+}
+else{
+Write-Host "neither 2 nor 4"
+}
+
+
+*)Conditionals statements:
+
+if(conditon){
+write-host ""
+}
+else{
+write-host ""
+}
+
+do while:
+
+$x=0
+do
+{
+write-host "output"
+}
+while($x -gt 0)
+ 
+
+
+foreach ($item in $collection)
+{
+}
+
+
+
+*functions in powershell:
+
+Functioin myfunction ([int]$a,[int]$b)
+{
+
+
+
+*)to execute it use . ./filename.ps1
+
+
+
+we can use param also param($a,$b)
+
+
+*)Advance functions:
+
+
+
+comment in powershell
+single line #
+multiline <#   ..... >#
+
+
+Providers and Drives:
+
+Providers 
+
+*)PowerShell Remoting:
+
+
+
+Enable-PSremoting used to enable winrm
+
+Enter-PSSession -ComputerName "....." -credential Get-credential
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,25 @@
+---
+- name: Check Jenkins build agents status
+  hosts: localhost
+  gather_facts: no
+  vars:
+    jenkins_url: "http://your-jenkins-server-url"
+    jenkins_user: "your-jenkins-username"
+    jenkins_api_token: "your-jenkins-api-token"
+  tasks:
+    - name: Get Jenkins nodes (build agents) status
+      uri:
+        url: "{{ jenkins_url }}/computer/api/json"
+        user: "{{ jenkins_user }}"
+        password: "{{ jenkins_api_token }}"
+        force_basic_auth: yes
+        validate_certs: no
+        return_content: yes
+      register: jenkins_nodes_response
+
+    - name: Print build agents status
+      debug:
+        msg: >-
+          {% for agent in jenkins_nodes_response.json.computer %}
+            {{ agent.displayName }} is {{ 'online' if not agent.offline else 'offline' }}
+          {% endfor %}

@@ -1,0 +1,106 @@
+pipeline {
+    agent any
+
+    environment {
+        SONIC_REPO = 'https://github.com/sonic-net/sonic-buildimage.git'
+        SONIC_BRANCH = 'master' // Change to the desired branch if needed
+        ASIC_VENDOR = 'broadcom'
+        BUILD_JOBS = 4
+    }
+
+    stages {
+        stage('Setup') {
+            steps {
+                script {
+                    // Ensure Docker is installed and running
+                    sh 'docker --version'
+                    
+                    // Ensure the 'overlay' module is loaded
+                    sh 'sudo modprobe overlay'
+                }
+            }
+        }
+
+        stage('Clone Repository') {
+            steps {
+            sh '''
+                rm -rf sonic-buildimage
+                git clone --recurse-submodules https://github.com/sonic-net/sonic-buildimage.git
+                '''
+    
+            }
+        }
+
+        stage('Install Prerequisites') {
+            steps {
+                script {
+                    // Install required packages and tools
+                    sh 'sudo apt-get update'
+                    sh 'sudo apt-get install -y python3-pip'
+                }
+            }
+        }
+
+        stage('Docker Setup') {
+            steps {
+                script {
+                    // Install Docker and configure user permissions
+                    sh 'curl -fsSL https://get.docker.com -o get-docker.sh'
+                    sh 'sh get-docker.sh'
+                    sh 'sudo usermod -aG docker ubuntu'
+                    //sh 'cd /var/lib/jenkins/workspace/sonic-build/sonic-buildimage'
+                }
+            }
+        }
+
+        stage('Initialize Build Environment') {
+            steps {
+                script {
+                    // Build the SONiC image
+                    sh '''
+                    cd sonic-buildimage
+                    sudo modprobe overlay
+                    make init
+                    '''
+                }
+
+            }
+        }
+
+        stage('Configure Build') {
+            steps {
+                script {
+                    // Build the SONiC image
+                    sh '''
+                    cd sonic-buildimage
+                    make configure PLATFORM=broadcom
+                    '''
+                }
+
+            }
+        }
+
+        stage('Build SONiC Image') {
+            steps {
+                script {
+                    // Build the SONiC image
+                    sh '''
+                    cd sonic-buildimage
+                    make SONIC_BUILD_JOBS=4 all
+                    '''
+                }
+
+            }
+        }
+    }
+
+    post {
+        always {
+            // Archive the build artifacts
+            archiveArtifacts artifacts: 'sonic-buildimage/target/*.bin', allowEmptyArchive: true
+
+            // Clean up workspace
+            cleanWs()
+        }
+    }
+}

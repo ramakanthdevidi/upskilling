@@ -1,0 +1,14 @@
+cd .ssh
+nano config
+ in config 
+Host *
+
+    IdentityFile ~/.ssh/nextgen-devops-team.pem
+
+
+vi nextgen.pemfile
+
+paste pem
+
+then ssh ipaddress
+

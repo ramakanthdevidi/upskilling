@@ -1,0 +1,30 @@
+   Power shell basics:
+*Windows PowerShell commands, called (cmdlets).
+
+*The first step is to go to the (Get-Help) command which gives you an explanation about how to give a command and its parameter.
+
+*The latest version of PowerShell is 5.0 and to check what is installed in our server we type the following command   :($PSVersionTable) or to check the version we can use (get-host)
+
+*after checking the version we have to update the help document (update-help)
+
+*to see how many commands in system we use (get-command) 
+
+
+*If we want to search any thing suppose we want service consist of command then we can use like (get-command "service") if we want count of it then we can use (get-command "service).count
+
+with modules also we can find the commansds ex:(get-command -module "Module name")
+
+
+we can extracts the commmand name with parameter also:ex:(get-command -parameterName ComputerName)
+
+
+
+get-help get-service
+
+
+ 
+
+ 
+
+
+

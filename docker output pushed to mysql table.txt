@@ -1,0 +1,40 @@
+
+for creating the container with username and password
+(docker run -d --name my_mysql_container -e MYSQL_ROOT_PASSWORD=root -p 3306:3306 mysql)  
+
+docker exec -it (containername or id) mysql -u root -p
+
+
+step 1: sudo apt-get update
+        sudo apt-get install mysql-server
+ 
+step 2: docker run --name root -e MYSQL_ROOT_PASSWORD=root -d mysql 
+
+step 3: mysql -u root -p
+
+step 4:Create a database:
+       create database rk;
+
+step 5: use rk;
+        create table google (dname varchar(500), value varchar(500));
+
+step 6:exit 
+
+step 7:create a file :
+       
+vi f1.sh
+
+step 8:give permission to this file;
+      chmod +x f1.sh
+
+step 9:in f1 file write code as
+ 
+#!/bin/bash
+# Run the Docker command and capture the output
+output=$(docker run --rm jordi/ab -k -c 5000 -n 100000 https://www.google.co.in/)
+ 
+# Extract and print lines 17 to 28 from the output
+output1=$(echo "$output" | awk 'NR>=17 && NR<=28 {print $0}')
+dname=$(echo "$output1" | awk -F ':' '{print $1}')
+value=$(echo "$output1" | awk -F ':' '{print $2}')
+mysql -u root -p -e "USE rk; INSERT INTO google (dname, value) VALUES ('$dname', '$value')"

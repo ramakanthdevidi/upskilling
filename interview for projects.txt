@@ -1,0 +1,15 @@
+hi my self ramakanth i joined in tcs in October 19 2023 and then i joined in nextgen project on jan17 2024 as a fresher i joined in tcs and i have 9 months of experinec ow form then i started learning and working on tools like git, Linuxshell scripting , ansible, terraform, saltstack, Jenkins for automation and docker, Kubernetes  and aws cloud and in azure i was also aware of bicep terraform and powershell so i have worked on all parts but i was not deeply went to it since i was working in project from 6 months 
+
+git 
+linuxshellscrpiting
+(ansible
+saltstack
+apacheairflow):configuration management tools 
+Terraform : It is a popular infrastructure-as-code tool that allows you to automate the provisioning and management of infrastructure resources
+jenkins:is a tool that is used for automation,to build, test and deploy software
+(docker 
+kubernetes):Docker is a containerization platform and runtime and Kubernetes is a platform for running and managing containers from many container runtimes
+aws cloud
+grafana dashboards for cpu monitoring 
+in azure:powershell, bicep
+python basic

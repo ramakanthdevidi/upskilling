@@ -1,0 +1,41 @@
+ 
+What is IAC:
+
+iac stands for infrastructure as code.
+The provisioning and management of infrastructure is done via code.
+you can maintain the iac in version control systems like git in the same way developers mainatain the source code.
+
+popular iAc tools:
+1,ARM Templetes,2,Terrafrom,3,Bicep.
+
+
+What is Bicep?
+
+it is Domain specific langauage for provisioning the Azure Resources declaratively.
+Its a wrapper to ARM Templetes.
+Bicep is converted to ARM Templates and then submitted to ARM Engine.
+Bicep code is simple,Human readable and crisp than Arm Templates.
+Anything that is done with ARM can be done even with Bicep
+
+bicep has a play ground where we can write code it is simple and small code .
+
+ 
+
+**)imperartive(sequence of code ):ex:.azcli ,we want to create infra one by one 
+
+ and declarative code(just deployment no sequence):ex:json,bicep etc
+
+
+ARM : its is service in azure, which uses for manageing,deploying and organizing cloud resources. it is a management service. ARM allows users to define the infra applications in a declarative template
+
+
+ARM Template: it is a json file that defines  the infraastrucure and configuration for azure resources within microsoftazure. or which are files that represent Azure resources.
+
+
+sku: stock keeping unit
+
+Standard_lrs: data reduncy, replicates ur data three times of ur data within the same data center,
+
+access tiers(hot,cool,archive): availbaility,means frequently used or not used or rarerly used.
+
+

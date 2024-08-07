@@ -1,0 +1,390 @@
+using docker file:
+-----------------
+this is a simple text file , which uses predefined keywords for creating customized docker images .
+key words in docker file are(case sensitive)
+
+1)FROM ---used to specify the base image from which the docker file has to be created.
+2)CMD -- This is used to specify the initial command that should be executed when the container starts.
+3)add is for installing 
+4) ENTRYPOINT :TO CHNAGE THE DEFAUKT PROCEESS EX:/BIN/BASH TO JAVA -JAR....
+like so on-----
+0-------
+----
+
+
+1)use case:
+
+create a dockerfile by taking nginx as the base image and specify the maintainer as logiclabs.construct an image from the docker file.
+
+Ans)$ sudo su -
+#vim dockerfile
+
+FROM nginx
+MAINTAINER logiclabs
+
+:wq
+
+once the docker file is created. then build an image from the docker file.
+# docker build -t mynginx .
+
+(t stands for tag, . stands current working dir , mynginx is the new image name .)
+
+To see list of images:
+# docker images
+
+
+
+ex2:)
+
+Whenever I start my container, I want a program to get executed.
+
+#vim dockerfile
+
+FROM centos
+MAINTAINER logiclabs
+CMD ["date"]
+
+:wq
+ to build the image form the docker file.
+# docker build -t mycentos .
+
+to see images .
+
+# docker images
+
+Running the container from the image.
+
+# docker run -it mycentos
+
+imp:In one docker file , we have one CMD instruction. if we give two CMD  instruction ,it executes the latest one wich you have given
+
+* To remove the docker file we use :rm dockerfile
+
+
+ex3:In ubantu container,I want to install git in it .
+vim dockerfile
+FROM ubantu
+MAINTAINER logiclabs
+RUN apt-get update
+RUN apt-get install -y git
+
+:wq
+
+note:cmd---will run when the container starts.
+RUN -- will executed when image is created.
+
+
+EX:5)
+
+Create a dockerfile, for using ubuntu as base image, and insatll java in it .
+Download jenkins.war and make execution of "java -jar jenkins.war" as the default process.
+
+
+for this changing the default process we use entrypoint key word 
+
+
+ex6:) How to upload the image in docker hub
+
+step1:creating our own container:docker run --name c1 -it ubuntu
+step2:install tree packages in this container:
+apt-get update
+apt-get install tree
+exit
+
+after this save the container as image
+# docker commit c1 ramakanthreddy709/ubuntu_img1
+here that total ramakanthreddy709/ubuntu_img1 is img name and it should start with id of docker hub
+here img gets created 
+to see this we can use the (docker images)
+
+TO UPLOAD THE IMG IN DOCKER HUB YOU HAVE TO LOGIN IN DOCKER HUB 
+FOR THAT WE USE DOCKER LOGIN 
+THEIR WE GIVE THE PASSWORD AND USERNAME 
+
+to push the docker image we use :(docker push img_name)
+
+
+for installing docker we go to site get.docker.com there we can see some commands 
+to check docker is installed or not :docker --version
+hub.docker.com to findd images.
+Creating multi-container architecture using-link:
+it can be created in two ways
+1.--link
+2.docker-compose
+use case;
+start two busy box (small software) cotainer and create a link between them
+craete a first busy box container 
+# docker run --name c1 -it busybox
+how to come out of container with out exit:ctl+p+q
+craete a second busy box container and lik to container c1
+# docker run --name c2 --link c1:c1-alias -it busybox   (c1-alias is alias name)
+what is the proof connectedor not.
+ping c1
+ 
+to see listof dockercontainer we use docker container ls
+ex:Creating a developing environment using docker.
+start mysql as container and link it with wordpress container.
+Developer should able to craete a wordperess website.
+ 
+ 
+ex 2:create a lamp Architecture using docker.
+l=linux
+a=apache tomcat
+m=mysql
+p:php
+all the lamp componts oare open source.
+we have linux already  beacuse  we createde mcahine in aws on ubantu.
+1)so herewe craete a mysql container:
+# docker run --name mydb -d -e MYSQL_ROOT_PASSWORD=ramakanth mysql:5
+ 
+2.)To start tomcat as container 
+# docker run --name apache -d -p 6060:8080 --link mydb:mysql tomme
+3>To check if tomcat is linked with mysql or not
+# docker inspect apache(apache is name of container)
+ 
+4.craete php container link to it.
+# docker run --name php -d --link apache:tomcat --link mydb:mysql  php
+ 
+ 
+ex3:
+Create CI-CD enviroment,where jenkins container is linked with two tomcact containers.
+first you have to del all previius contaners using:docker rm -f $(docker ps -aq)
+ 
+1.To startjenkins as container:
+# docker run --name devserver -d -p 7070:8080 jenkins
+2.we need two tomcat containers(QA server and production server)
+link that as soon on .......................................
+...............
+3.linl......................
+
+ 
+Ex 4:
+ 
+Creating testing environment using docker
+ 
+Create  selenium hub container,and link it with two node containers.
+one node with fire fox installed ,another node with chrome installed.
+ 
+ 
+so for above exaples wee used link concept so for 2 or three container s it is ok, for 100of  container it is not ok 
+then we go for docker -compose
+ 
+ 
+Docker compose:This is a feature of docker using which we can craete multicontainer architecture using yaml file(at another markup language)
+This yaml file contains information about the containers that we want to unch and how they have to be linked with each other.yaml is a file format.it is not scripting language.
+yaml willl store the datta in key value pairs .
+lefthand side -Key
+right hand side-value
+yaml is a space indented.
+how to stop container :docker -compose stop
+the file name should always be # vim docker-compose.yml
+ 
+ymal file always start with ---
+e=and end with ...
+ 
+ 
+#vim docker-compose.yml
+---
+version:'3'
+ 
+services:
+mydb:
+  image: mysql:5
+  environment:
+   MYSQL_ROOT_PASSWORD: sunil
+ 
+mysite:
+  image: wordpress
+  ports:
+   -5050:80
+  links:
+-mydb:mysql
+...
+ 
+ 
+to start the above services from dockerfile
+# docker-compose up
+ 
+ 
+    Docker VOLUMES:
+ 
+ 
+Docker containers are ephemeral(temporary)
+where as the data processed by the container should be permanent.
+ 
+generally,when a conitainer is deleted all its data willl be lost.
+to preserve the data,even after deleting the container ,we use volumes.
+ 
+Volumes are of two types.
+1)Simple docker voulums
+2)Docker volume containers
+ 
+ 
+Simple docker Volumes:
+ 
+these volumes aree used only when we want to acccess the data.
+even afer the container is deleted.
+but this data cannot be shared with other containers.
+ 
+ 
+use case
+--------
+1) Create a direcotory called/data,
+start centos as container and mount /data as volume.
+Create files in mounted volume in centos container,
+exit from the container and delete the container. check if the files are still available.
+ 
+ 
+ 
+ for installing docker we go to site get.docker.com there we can see some commands 
+to check dockker is installed or not :docker --version
+hub.docker.com to findd images.
+Creating multi-container architecture using-link:
+it can be created in two ways
+1.--link
+2.docker-compose
+use case;
+start two busy box (small software) cotainer and create a link between them
+craete a first busy box container 
+# docker run --name c1 -it busybox
+how to come out of container with out exit:ctl+p+q
+craete a second busy box container and lik to container c1
+# docker run --name c2 --link c1:c1-alias -it busybox   (c1-alias is alias name)
+what is the proof connectedor not.
+ping c1
+ 
+to see listof dockercontainer we use docker container ls
+ex:Creating a developing environment using docker.
+start mysql as container and link it with wordpress container.
+Developer should able to craete a wordperess website.
+ 
+ 
+ex 2:create a lamp Architecture using docker.
+l=linux
+a=apache tomcat
+m=mysql
+p:php
+all the lamp componts oare open source.
+we have linux already  beacuse  we createde mcahine in aws on ubantu.
+1)so herewe craete a mysql container:
+# docker run --name mydb -d -e MYSQL_ROOT_PASSWORD=ramakanth mysql:5
+ 
+2.)To start tomcat as container 
+# docker run --name apache -d -p 6060:8080 --link mydb:mysql tomme
+3>To check if tomcat is linked with mysql or not
+# docker inspect apache(apache is name of container)
+ 
+4.craete php container link to it.
+# docker run --name php -d --link apache:tomcat --link mydb:mysql  php
+ 
+ 
+ex3:
+Create CI-CD enviroment,where jenkins container is linked with two tomcact containers.
+first you have to del all previius contaners using:docker rm -f $(docker ps -aq)
+ 
+1.To startjenkins as container:
+# docker run --name devserver -d -p 7070:8080 jenkins
+2.we need two tomcat containers(QA server and production server)
+link that as soon on .......................................
+...............
+3.linl......................
+
+ 
+Ex 4:
+ 
+Creating testing environment using docker
+ 
+Create  selenium hub container,and link it with two node containers.
+one node with fire fox installed ,another node with chrome installed.
+ 
+ 
+so for above exaples wee used link concept so for 2 or three container s it is ok, for 100of  container it is not ok 
+then we go for docker -compose
+ 
+ 
+Docker compose:This is a feature of docker using which we can craete multicontainer architecture using yaml file(at another markup language)
+This yaml file contains information about the containers that we want to unch and how they have to be linked with each other.yaml is a file format.it is not scripting language.
+yaml willl store the datta in key value pairs .
+lefthand side -Key
+right hand side-value
+yaml is a space indented.
+how to stop container :docker -compose stop
+the file name should always be # vim docker-compose.yml
+ 
+ymal file always start with ---
+e=and end with ...
+ 
+ 
+#vim docker-compose.yml
+---
+version:'3'
+ 
+services:
+mydb:
+  image: mysql:5
+  environment:
+   MYSQL_ROOT_PASSWORD: sunil
+ 
+mysite:
+  image: wordpress
+  ports:
+   -5050:80
+  links:
+-mydb:mysql
+...
+ 
+ 
+to start the above services from dockerfile
+# docker-compose up
+ 
+ 
+    Docker VOLUMES:
+ 
+ 
+Docker containers are ephemeral(temporary)
+where as the data processed by the container should be permanent.
+ 
+generally,when a conitainer is deleted all its data willl be lost.
+to preserve the data,even after deleting the container ,we use volumes.
+ 
+Volumes are of two types.
+1)Simple docker voulums
+2)Docker volume containers
+ 
+ 
+Simple docker Volumes:
+ 
+these volumes aree used only when we want to acccess the data.
+even afer the container is deleted.
+but this data cannot be shared with other containers.
+ 
+ 
+use case
+--------
+1) Create a direcotory called/data,
+start centos as container and mount /data as volume.
+Create files in mounted volume in centos container,
+exit from the container and delete the container. check if the files are still available.
+ 
+ 
+ In Docker, there are several types of networks that you can work with:
+
+1. **Bridge Networks**: These are the default networks created when you install Docker. Containers on the same bridge network can communicate with each other using IP addresses. By default, Docker creates a bridge network named `bridge`.
+
+2. **Host Networks**: When you run a container with the `--network host` option, it uses the host's network stack directly, bypassing Docker's network abstraction. This allows the container to have the same network configuration as the host.
+
+3. **Overlay Networks**: These networks facilitate communication between containers running on different Docker hosts. They are used primarily in Docker Swarm mode, enabling containers across multiple Docker daemons to connect with each other securely.
+
+4. **Macvlan Networks**: These networks assign a MAC address to each container's network interface, making it appear as if it is directly connected to the physical network. This is useful when you want containers to appear as separate physical devices on the network.
+
+5. **None Network**: Containers using this network mode have no networking. They cannot communicate with the network or other containers.
+
+6. **Custom Networks**: You can create custom bridge networks with specific configurations using the `docker network create` command. These networks can have specific IP address ranges, subnets, and gateway configurations tailored to your application's needs.
+
+Each of these network types serves different purposes and can be used depending on your specific use case within Docker. The number of networks you have depends on how many of these types you create and use in your Docker environment.
+ 
+ 
+ 
+
+
+

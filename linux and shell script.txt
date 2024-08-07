@@ -1,0 +1,175 @@
+                       LINUX
+              create a file:
+ 
+*how to create a file-using  cat commands like this : cat > f1
+here f1 file is created
+*to view the file: cat f1
+*to remove file: rm f1
+to come out file we use ctrl d
+*2nd way to create a file is using touch command:touch f2
+touch comand for empty files
+ls:list all files.
+ 
+  file and directory haveing three types of permission:
+ 
+  read--r
+  write--w
+  execute--x
+ 
+we are having 9 char of permissions
+ 
+        - - -     - - -          - - -
+        woner-u     group-g          other-o
+ 
+changing the permission: we use chmod
+here r is represnted with 4
+w--2
+x--1
+total 7
+ 
+example chmod 764 file1
+here we are giving permission according to that 3 categores
+ 
++ give permission'
+- removes the permission
+ 
+ex:chmod u+w f6
+here we are giving write permisiion to woner
+
+              create a directory:like folder
+ 
+ 
+*mkdir d1:creating
+rmdir d1:removing ,if it is empty
+other wise rm -r d1
+
+     HOW TO CREATE ONE DIRECTORY IN OTHER
+ 
+ 
+mkdir d1
+cd d1
+mkdir d2
+cd d2
+
+ 
+ 
+cd.. allows you to go previous directory
+ 
+            How to identify which is file and directory
+ 
+* by colors blue indicates directory.
+if there is no colors then we use ls -l where we can see all details there starting from d indicates directory
+or  starting from - indicates file.
+ 
+to get more info go for ls -l
+in linux if file name starts with .(dot) its a hidden directory or file ex: touch .f1
+so if want to see that hidden use ls -a
+if we want to copy file we use cp ex: cp f1 f2
+ 
+
+
+ 
+linux commands :
+ls -lrt
+gives the details of file name as well as permisions
+with that we can open the file by cat file name
+ 
+ 
+                                                    Introduction to awk command/Script
+ 
+it is used for text processing.
+ 
+if we want to print any third line second line for that type we use awk.
+awk is used like 
+1.a command 
+2.A scripting language.
+ 
+--The awk command is programming language ,which requires no compiling ,and allows the user to use variables,numeric functions stijng function and logical operaters.
+The Awk Commnad in Unix is just like Scripting language which is used for text procesing 
+Awk Command in unix is most important command used to find nd replace the text.
+it consider ech line as records and in each record consist of fileds
+by default field as seprate by space
+we can change the separteotr by -F
+awk has it won predefined variables like $0,$1... $n and NR,Nf
+Syntax:
+ 
+awk options 'pattern {action}' filename
+command|awk options 'pattern {action}'
+ 
+* pattern:matching word or condition
+*options:-f fs To specify a filed separator
+-v va=value To declare a variable
+action is a logic
+$0 means entire file will disply
+$1 and so and is to display the particular coloumn
+ 
+awk '{print $1}' filenme
+here it will print couloumn 1 from that file.
+if we want to add any thing that back of coloumn then
+awk '{ print $1 "my name is }' file name
+-->NR : no of records,gives output with recoerd no.
+-->NF:how many fileds we have 
+it all should write in brackets
+if we write $ NF last filed will display notrmal nf means not lastfield only no of fields
+ 
+ 
+                          SED command 
+
+
+what is sed :it an editor used to work on stream of data
+sed stands for stream of editor.
+viewing file content
+Searching
+find and replace
+insertion or deletion
+it also supports regular expression.
+Adavntages of sed over vi/vim editors:
+editfiles without opening it.
+ 
+ 
+Syntax for sed command:
+
+sed[options] 'commands' file -to-work-with-sed
+ 
+viewing file content with sed command
+sed -n 'p' file.txt is used for printing file content one time here with out -n it wil print two times
+if we want to print all file contetwe can use that above and also :sed "" file.txt.
+sed -n '3p' file.txt:it will 3rd line no
+like so on by replceing no it will print that.
+sed -n '3,10p' file.txt:it will print 3rd line to 10th line
+sed -n '30,$p' file.txt:it will print form 30 to last line whatever for that we use $p
+sed -n '1~3p' file.txt:it will print 1,4,7---- lines
+IF WE ARE USING P FOR PRINT THEN WE USE -N FOR THAT BECAUSE IF WE NOT USE -N IT WILL PRINT 2 times.
+ 
+ 
+DELETE in sed
+ 
+for print we used p here we use d for that 
+EX:sed '4,$d' file.txt
+here it deletes 4th to last it only prints the 1 to 3
+ 
+here if we delete also the original file content does not change '
+only while displaying it shows 
+so if i want to change the original file informatoion
+for thatwe use sed -i '10,$d' file.txt
+we can craete backup for it usinfg:sed -i .back '3,$d' file.txt
+
+ 
+SEARCHING WITH SED":
+if we want a line that has particular word we go for searching
+Ex: sed -n '/if/p' file.txt
+we get lines which are having if.
+when ever we want use  multiple opton line sto print we use -e
+ex:sed -n -e "/if/p" -e "/who/p" file.txt
+ 
+FIND AND REPLACE WITH SED COMMAND :
+ 
+for that we use s
+ex:sed 's/root/udaemy/' file.txt
+here root is replaced with udeymy here only first occurance will be replaced 
+if we want toreplace all areas means we use g key word globally key word.
+ex:sed 's/root/udaemy/g' file.txt
+ 
+ 
+ 
+ 

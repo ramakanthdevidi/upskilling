@@ -1,0 +1,16 @@
+Azure Devops services:
+
+1)Boards:used to plan ur work
+
+2)Repos:tfs or git  maininting your code
+
+3)pipeline:deployment of the code
+
+4)Test plans:
+
+5) Artifacts:collections of package
+
+
+
+Azure devops
+

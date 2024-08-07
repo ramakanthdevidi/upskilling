@@ -1,0 +1,79 @@
+Continuous Monitoring in Devops
+
+why do we need continous monitoring:
+
+1.it is an automated process by which one can observe and detect compliance issues and security threats during each phase of the Devops pipeline.
+
+Continous Monitoring Tools In Devops:
+1.Monitoring Tools:ex prometheous, sensui,nagios
+2.Configuration management tools: ansible , chef , puppet
+3.Alerting Tools:servicenow,pagerDuty,slack
+4.metric strorage: influxdb,aws,splunk
+5.Visualization Tools:Grafana.
+
+
+
+
+
+Grafana :
+
+*Grafana is a Visualization devops tool 
+we can visualize the data and understand how it is working in realtime
+
+it is a multi-platfrom open source analytics and interactive visualization web application. it provides
+
+Charts
+Graphs
+Alerts
+
+
+Features of Grafana 
+
+1.Visualize
+2.Alert
+3.Open Source
+4.Extend
+5.Collaborate
+
+              How To Install Grafana in Ubuntu
+
+sudo apt-get install -y curl
+curl -fsSL https://packages.grafana.com/gpg.key | sudo gpg --dearmor -o /usr/share/keyrings/grafana-archive-keyring.gpg
+
+echo "deb [signed-by=/usr/share/keyrings/grafana-archive-keyring.gpg] https://packages.grafana.com/oss/deb stable main" | sudo tee /etc/apt/sources.list.d/grafana.list > /dev/null
+
+sudo apt-get update
+sudo apt-get install grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+sudo systemctl status grafana-server
+
+
+Prometheus:
+
+What is Prometheus: Prometheus is a software application used for event monitoring and alerting.
+
+records any purely numeric time series
+Designed for Realiability
+Prometheus is a pull-based tool
+
+
+
+
+https://851725535367.signin.aws.amazon.com/console
+
+
+grafana
+
+
+Ramakanth45!
+
+
+
+
+
+
+
+
+
+sudo lsof -i -p for seeing the instnace running on what ports

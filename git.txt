@@ -1,0 +1,16 @@
+git
+
+docker
+
+Kubernetes
+
+ansible
+
+terraform
+
+saltstack
+
+apacheairflow
+
+bicep
+
